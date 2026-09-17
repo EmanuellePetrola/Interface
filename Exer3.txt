@@ -1,0 +1,47 @@
+using System;
+
+interface ICamera
+{
+    void TirarFoto();
+}
+
+interface IVoavel
+{
+    void Decolar();
+    void Pousar();
+}
+
+class Drone : ICamera, IVoavel
+{
+    public void TirarFoto()
+    {
+        Console.WriteLine("Tirando foto panorâmica...");
+    }
+
+    public void Decolar()
+    {
+        Console.WriteLine("Drone decolando verticalmente...");
+    }
+
+    public void Pousar()
+    {
+        Console.WriteLine("Drone pousando com segurança...");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Drone drone = new Drone();
+
+        ICamera camera = drone;
+        camera.TirarFoto();
+
+        IVoavel voavel = drone;
+        voavel.Decolar();
+        voavel.Pousar();
+
+        Console.ReadKey();
+    }
+}
