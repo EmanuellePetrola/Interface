@@ -1,0 +1,74 @@
+using System;
+using System.Collections.Generic;
+
+interface IValidavel
+{
+    bool Validar();
+}
+
+abstract class CampoFormulario
+{
+    public string NomeDoCampo { get; set; }
+    public string Valor { get; set; }
+
+    public CampoFormulario(string nomeDoCampo, string valor)
+    {
+        NomeDoCampo = nomeDoCampo;
+        Valor = valor;
+    }
+}
+
+class CampoTexto : CampoFormulario, IValidavel
+{
+    public CampoTexto(string nomeDoCampo, string valor)
+        : base(nomeDoCampo, valor)
+    {
+    }
+
+    public bool Validar()
+    {
+        return !string.IsNullOrWhiteSpace(Valor);
+    }
+}
+
+class CampoNumerico : CampoFormulario, IValidavel
+{
+    public CampoNumerico(string nomeDoCampo, string valor)
+        : base(nomeDoCampo, valor)
+    {
+    }
+
+    public bool Validar()
+    {
+        return int.TryParse(Valor, out int numero);
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        List<IValidavel> campos = new List<IValidavel>();
+
+        CampoTexto textoValido = new CampoTexto("Nome", "Emanuelle");
+        CampoTexto textoInvalido = new CampoTexto("Nome", "");
+
+        CampoNumerico numeroInvalido = new CampoNumerico("Idade", "abc");
+
+        campos.Add(textoValido);
+        campos.Add(textoInvalido);
+        campos.Add(numeroInvalido);
+
+        foreach (IValidavel campo in campos)
+        {
+            if (campo.Validar())
+            {
+                Console.WriteLine("Campo válido.");
+            }
+            else
+            {
+                Console.WriteLine("Campo inválido.");
+            }
+        }
+    }
+}
