@@ -1,0 +1,30 @@
+using System;
+
+Documento documento = new Documento();
+Foto foto = new Foto();
+
+documento.Salvar();
+foto.Salvar();
+
+Console.ReadKey();
+
+interface ISalvavel
+{
+    void Salvar();
+}
+
+class Documento : ISalvavel
+{
+    public void Salvar()
+    {
+        Console.WriteLine("Salvando o documento em formato .DOC");
+    }
+}
+
+class Foto : ISalvavel
+{
+    public void Salvar()
+    {
+        Console.WriteLine("Salvando a foto em formato .JPG");
+    }
+}
